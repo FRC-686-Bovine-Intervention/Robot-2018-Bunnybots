@@ -1,11 +1,11 @@
 package frc.robot;
 
-import org.usfirst.frc.team686.robot.auto.AutoModeBase;
-import org.usfirst.frc.team686.robot.auto.modes.*;
+import frc.robot.auto.AutoModeBase;
+import frc.robot.auto.modes.*;
 
-import org.usfirst.frc.team686.robot.lib.joystick.*;
+import frc.robot.lib.joystick.*;
 
-import org.usfirst.frc.team686.robot.lib.util.Pose;
+import frc.robot.lib.util.Pose;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
