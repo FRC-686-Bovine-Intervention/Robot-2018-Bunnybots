@@ -59,8 +59,8 @@ public class Constants extends ConstantsBase
     // (Note that if multiple Talons are dedicated to a mechanism, any sensors are attached to the master)
 	public static int kLeftMotorMasterTalonId   = 1;
 	public static int kLeftMotorSlave1TalonId 	= 2;
-    public static int kRightMotorMasterTalonId 	= 4;
-	public static int kRightMotorSlave1TalonId 	= 5;
+    public static int kRightMotorMasterTalonId 	= 3;
+	public static int kRightMotorSlave1TalonId 	= 4;
 
     // motors inversions
     public static boolean	kLeftMotorInverted  	= false;
