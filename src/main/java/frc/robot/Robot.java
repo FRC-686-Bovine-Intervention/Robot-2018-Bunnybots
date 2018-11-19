@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.lib.joystick.*;
+import frc.robot.Constants;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,12 +23,16 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  * project.
  */
 public class Robot extends IterativeRobot {
+  public final int goodOuttakePort = 5;
+  public final int badOuttakePort = 6;
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   ColorSorter colorSorter;
   Intake intake; 
+  Outtake goodOuttake;
+  Outtake badOuttake;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -38,6 +44,8 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     colorSorter = ColorSorter.getInstance();
     intake = Intake.getInstance();
+    goodOuttake = new Outtake(goodOuttakePort);
+    badOuttake = new Outtake(badOuttakePort);
   }
 
   /**
@@ -94,6 +102,9 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     colorSorter.run();
     intake.run();
+    JoystickControlsBase controls = ArcadeDriveJoystick.getInstance();
+    goodOuttake.run(controls.getButton(Constants.kXboxButtonA));
+    badOuttake.run(controls.getButton(Constants.kXboxButtonB));
   } 
 
 

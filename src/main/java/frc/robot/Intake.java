@@ -12,7 +12,7 @@ public class Intake
     public static Intake getInstance() { return mInstance; }
     public Talon intakeMotor; 
     public final int port = 3; 
-    public static double intakeSpeed = 75;
+    public static double intakeSpeed = 1;
     public static double intakeStop = 0; 
 
 
