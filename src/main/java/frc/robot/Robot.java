@@ -77,6 +77,8 @@ public class Robot extends IterativeRobot {
     // autoSelected = SmartDashboard.getString("Auto Selector",
     // defaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    // start ball sorter
+    //start intake action
   }
 
   /**
