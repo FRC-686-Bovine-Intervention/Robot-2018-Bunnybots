@@ -1,6 +1,7 @@
 package frc.robot.auto.modes;
 
 import frc.robot.Constants;
+import frc.robot.auto.actions.*;
 import frc.robot.auto.AutoModeBase;
 import frc.robot.auto.AutoModeEndedException;
 import frc.robot.auto.actions.DriveStraightAction;
@@ -19,7 +20,7 @@ public class CenterStartMode extends AutoModeBase {
     @Override
     protected void routine() throws AutoModeEndedException 
     {
-    	System.out.println("Starting Auto Mode: Center Start Mode")
+    	System.out.println("Starting Auto Mode: Center Start Mode");
         PathSegment.Options pathOptions	= new PathSegment.Options(Constants.kPathFollowingMaxVel, SlowerAccel, 48, false);
         PathSegment.Options tightTurnOptions	= new PathSegment.Options(Constants.kPathFollowingMaxVel/2, SlowerAccel, 24, false);
         //Vector2d backupPosition = 		new Vector2d(24, 0);
@@ -67,17 +68,16 @@ public class CenterStartMode extends AutoModeBase {
         turnAroundPath.add(new Waypoint(outtakeStartPosition, tightTurnOptions));
         
         runAction(new goodOuttakeAction()); 
-        waitAction(double 1);
+        runAction(new WaitAction(1.0));
         //runAction(new PathFollowerAction(TurnPath));  
         //runAction(new PathFollowerAction(sharpTurnPath));
         runAction(new PathFollowerAction(driveToBallsPath));
-        runAction(new ParallelAction Arrays.asList(new Action[] {
-            new PathFollowerAction(ballIntakePath);
-            new IntakeAction());    
-        })
+        runAction(new ParallelAction (Arrays.asList(new Action[] {
+            (PathFollowerAction(ballIntakePath)),
+             (IntakeAction())})));
         //runAction(new PathFollowerAction(turnToCratePath));
         runAction(new PathFollowerAction(driveToCratePath)); // don't cross middle line
-        //stop intake action 
+        runAction(new goodOuttakeStopAction()); 
         runAction(new PathFollowerAction(turnAroundPath));
         runAction(new goodOuttakeAction());      
     }

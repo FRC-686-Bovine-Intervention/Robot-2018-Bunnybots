@@ -1,6 +1,7 @@
 package frc.robot.auto.modes;
 
 import frc.robot.Constants;
+import frc.robot.auto.actions.*;
 import frc.robot.auto.AutoModeBase;
 import frc.robot.auto.AutoModeEndedException;
 import frc.robot.auto.actions.DriveStraightAction;
@@ -19,7 +20,7 @@ public class DriveStraightMode extends AutoModeBase {
     @Override
     protected void routine() throws AutoModeEndedException 
     {
-    	System.out.println("Starting Auto Mode: Center Start Mode")
+    	System.out.println("Starting Auto Mode: Center Start Mode");
         PathSegment.Options pathOptions	= new PathSegment.Options(Constants.kPathFollowingMaxVel, SlowerAccel, 48, false);
         PathSegment.Options tightTurnOptions	= new PathSegment.Options(Constants.kPathFollowingMaxVel/2, SlowerAccel, 24, false);
         //Vector2d backupPosition = 		new Vector2d(24, 0);
@@ -29,7 +30,7 @@ public class DriveStraightMode extends AutoModeBase {
         Vector2d driveToCratePosition = new Vector2d(0,0);
         Vector2d cratePosition = new Vector2d(0,0);
         Vector2d startPosition = new Vector2d(0,0);
-        
+
         /*
         Path TurnPath = new Path();
 		TurnPath.add(new Waypoint(startPosition, tightTurnOptions));	
@@ -46,10 +47,6 @@ public class DriveStraightMode extends AutoModeBase {
         Path driveToBallsPath = new Path();
 		driveToBallsPath.add(new Waypoint(driveToBallsPosition, pathOptions));	
         driveToBallsPath.add(new Waypoint(intakeBallsPosition, pathOptions));
-
-        Path ballIntakePath = new Path();
-		ballIntakePath.add(new Waypoint(intakeBallsPosition, pathOptions));	
-        ballIntakePath.add(new Waypoint(driveToCratePosition, pathOptions));
 
         Path ballIntakePath = new Path();
 		ballIntakePath.add(new Waypoint(intakeBallsPosition, pathOptions));	
@@ -74,12 +71,12 @@ public class DriveStraightMode extends AutoModeBase {
         */
 
         runAction(new goodOuttakeAction()); 
-        waitAction(double 1);
+        waitAction(1.0);
         runAction(new PathFollowerAction(driveToBallsPath));
-        runAction(new ParallelAction Arrays.asList(new Action[] {
-            new PathFollowerAction(ballIntakePath);
-            new IntakeAction());    
-        })
+        runAction(new ParallelAction (Arrays.asList(new Action[] {
+            (PathFollowerAction(ballIntakePath)),
+            (IntakeAction())})));    
+        
         runAction(new PathFollowerAction(backupToStartPath));
+        }
     }
-}
