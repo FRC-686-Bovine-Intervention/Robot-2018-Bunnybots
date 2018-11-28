@@ -23,16 +23,17 @@ public class BallSorter
 
  
     public void run()
-    {/*
+    { 
+        /*
         if (event.color)
         {
-          Serial.println(event.color); Serial.println("detected");
+          System.out.println(event.color); System.out.println("detected");
           sorterMotor.set(sorterSpeed);
         }
         else
         {
-          Serial.println("Sensor overload");
+          System.out.println("Sensor overload");
           sorterMotor.set(sorterStop);
-        }
-    */}
+        }*/
+    }
 }
