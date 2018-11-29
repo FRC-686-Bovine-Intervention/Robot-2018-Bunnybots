@@ -1,12 +1,21 @@
 package frc.robot.auto.modes;
 
-import frc.robot.Constants;
-import frc.robot.auto.actions.*;
+import java.util.Arrays;
+
 import frc.robot.auto.AutoModeBase;
 import frc.robot.auto.AutoModeEndedException;
-import frc.robot.auto.actions.DriveStraightAction;
-
-import edu.wpi.first.wpilibj.Talon;
+import frc.robot.auto.actions.Action;
+import frc.robot.auto.actions.GoodOuttakeAction;
+import frc.robot.auto.actions.GoodOuttakeStopAction;
+import frc.robot.auto.actions.IntakeAction;
+import frc.robot.auto.actions.ParallelAction;
+import frc.robot.auto.actions.PathFollowerAction;
+import frc.robot.auto.actions.WaitAction;
+import frc.robot.lib.util.Path;
+import frc.robot.lib.util.Path.Waypoint;
+import frc.robot.lib.util.PathSegment;
+import frc.robot.lib.util.Vector2d;
+import frc.robot.loops.DriveLoop;
 
 /**
  * Just drive in a straight line, using VelocityHeading mode
@@ -21,8 +30,8 @@ public class CenterStartMode extends AutoModeBase {
     protected void routine() throws AutoModeEndedException 
     {
     	System.out.println("Starting Auto Mode: Center Start Mode");
-        PathSegment.Options pathOptions	= new PathSegment.Options(Constants.kPathFollowingMaxVel, SlowerAccel, 48, false);
-        PathSegment.Options tightTurnOptions	= new PathSegment.Options(Constants.kPathFollowingMaxVel/2, SlowerAccel, 24, false);
+        PathSegment.Options pathOptions	= new PathSegment.Options(DriveLoop.kPathFollowingMaxVel, DriveLoop.kPathFollowingMaxAccel, 48, false);
+        PathSegment.Options tightTurnOptions	= new PathSegment.Options(DriveLoop.kPathFollowingMaxVel, DriveLoop.kPathFollowingMaxAccel, 48, false);
         //Vector2d backupPosition = 		new Vector2d(24, 0);
 		//Vector2d cubePickupPosition = 	new Vector2d(152 - 3*13 - Constants.kCenterToExtendedIntake +  0, 0);	
         Vector2d startPosition = new Vector2d(0,0);;
@@ -30,8 +39,7 @@ public class CenterStartMode extends AutoModeBase {
         Vector2d intakeBallsPosition = new Vector2d(0,0);
         Vector2d driveToCratePosition = new Vector2d(0,0);
         Vector2d cratePosition = new Vector2d(0,0);
-        Vector2d turnAroundPath = new Vector2d(0,0);
-
+        Vector2d outtakeStartPosition = new Vector2d(0,0);
         /*
         Path TurnPath = new Path();
 		TurnPath.add(new Waypoint(startPosition, tightTurnOptions));	
@@ -63,22 +71,22 @@ public class CenterStartMode extends AutoModeBase {
 		driveToCratePath.add(new Waypoint(driveToCratePosition, tightTurnOptions));	
         driveToCratePath.add(new Waypoint(cratePosition, pathOptions));
 
-        Path turnAroundPath = new Path();
-		turnAroundPath.add(new Waypoint(cratePosition, tightTurnOptions));	
-        turnAroundPath.add(new Waypoint(outtakeStartPosition, tightTurnOptions));
+        Path turnOuttakePath = new Path();
+		turnOuttakePath.add(new Waypoint(cratePosition, tightTurnOptions));	
+        turnOuttakePath.add(new Waypoint(outtakeStartPosition, tightTurnOptions));
         
-        runAction(new goodOuttakeAction()); 
+        runAction(new GoodOuttakeAction()); 
         runAction(new WaitAction(1.0));
         //runAction(new PathFollowerAction(TurnPath));  
         //runAction(new PathFollowerAction(sharpTurnPath));
         runAction(new PathFollowerAction(driveToBallsPath));
         runAction(new ParallelAction (Arrays.asList(new Action[] {
-            (PathFollowerAction(ballIntakePath)),
-             (IntakeAction())})));
+            (new PathFollowerAction(ballIntakePath)),
+             (new IntakeAction())})));
         //runAction(new PathFollowerAction(turnToCratePath));
         runAction(new PathFollowerAction(driveToCratePath)); // don't cross middle line
-        runAction(new goodOuttakeStopAction()); 
-        runAction(new PathFollowerAction(turnAroundPath));
-        runAction(new goodOuttakeAction());      
+        runAction(new GoodOuttakeStopAction()); 
+        runAction(new PathFollowerAction(turnOuttakePath));
+        runAction(new GoodOuttakeAction());      
     }
 }

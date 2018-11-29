@@ -1,19 +1,27 @@
 package frc.robot.auto.modes;
 
-import frc.robot.Constants;
-import frc.robot.auto.actions.*;
+import java.util.Arrays;
+
 import frc.robot.auto.AutoModeBase;
 import frc.robot.auto.AutoModeEndedException;
-import frc.robot.auto.actions.DriveStraightAction;
-
-import edu.wpi.first.wpilibj.Talon;
+import frc.robot.auto.actions.Action;
+import frc.robot.auto.actions.GoodOuttakeAction;
+import frc.robot.auto.actions.IntakeAction;
+import frc.robot.auto.actions.ParallelAction;
+import frc.robot.auto.actions.PathFollowerAction;
+import frc.robot.auto.actions.WaitAction;
+import frc.robot.lib.util.Path;
+import frc.robot.lib.util.Path.Waypoint;
+import frc.robot.lib.util.PathSegment;
+import frc.robot.lib.util.Vector2d;
+import frc.robot.loops.DriveLoop;
 
 /**
  * Just drive in a straight line, using VelocityHeading mode
  */
-public class DriveStraightMode extends AutoModeBase {
+public class DriveStraightIntakeMode extends AutoModeBase {
 
-    public DriveStraightMode() 
+    public DriveStraightIntakeMode() 
     { 
     }
 
@@ -21,8 +29,8 @@ public class DriveStraightMode extends AutoModeBase {
     protected void routine() throws AutoModeEndedException 
     {
     	System.out.println("Starting Auto Mode: Center Start Mode");
-        PathSegment.Options pathOptions	= new PathSegment.Options(Constants.kPathFollowingMaxVel, SlowerAccel, 48, false);
-        PathSegment.Options tightTurnOptions	= new PathSegment.Options(Constants.kPathFollowingMaxVel/2, SlowerAccel, 24, false);
+        PathSegment.Options pathOptions	= new PathSegment.Options(DriveLoop.kPathFollowingMaxVel, DriveLoop.kPathFollowingMaxAccel, 48, false);
+        PathSegment.Options tightTurnOptions	= new PathSegment.Options(DriveLoop.kPathFollowingMaxVel/2, DriveLoop.kPathFollowingMaxAccel, 24, false);
         //Vector2d backupPosition = 		new Vector2d(24, 0);
 		//Vector2d cubePickupPosition = 	new Vector2d(152 - 3*13 - Constants.kCenterToExtendedIntake +  0, 0);	
         Vector2d driveToBallsPosition = new Vector2d(0,0);
@@ -70,12 +78,12 @@ public class DriveStraightMode extends AutoModeBase {
         turnAroundPath.add(new Waypoint(outtakeStartPosition, tightTurnOptions));
         */
 
-        runAction(new goodOuttakeAction()); 
-        waitAction(1.0);
+        runAction(new GoodOuttakeAction()); 
+        runAction(new WaitAction(1.0));
         runAction(new PathFollowerAction(driveToBallsPath));
         runAction(new ParallelAction (Arrays.asList(new Action[] {
-            (PathFollowerAction(ballIntakePath)),
-            (IntakeAction())})));    
+            (new PathFollowerAction(ballIntakePath)),
+            (new IntakeAction())})));    
         
         runAction(new PathFollowerAction(backupToStartPath));
         }

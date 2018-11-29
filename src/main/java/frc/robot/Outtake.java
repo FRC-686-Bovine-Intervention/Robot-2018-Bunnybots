@@ -1,10 +1,6 @@
-package frc.robot; 
-
-import frc.robot.lib.joystick.*;
-import frc.robot.Constants;
+package frc.robot;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.GenericHID;
 
 public class Outtake
 {

@@ -11,5 +11,8 @@
     ".project": true
   },
   "wpilib.online": true,
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
+  "typescript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+  "javascript.format.placeOpenBraceOnNewLineForFunctions": true
 }
