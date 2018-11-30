@@ -8,7 +8,7 @@ public class ColorSorter
 {
     public static ColorSorter mInstance = new ColorSorter();
     public static ColorSorter getInstance() { return mInstance; }
-    public final int port = 5;
+    public final int port = 4;
     public Jaguar colorSortMotor;
     boolean redDetected = false;
     public final double speed = +1.0;
