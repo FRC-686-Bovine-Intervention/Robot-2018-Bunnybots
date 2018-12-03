@@ -18,20 +18,20 @@ public class Hopper
 
         public Hopper ()
         {
-        hopperMotor = new Talon(port);
+            hopperMotor = new Talon(port);
         }
 
-            public void run (boolean btnIsPushed) //possible change - pass in buttons on remote instead of boolean
+        public void run (boolean btnIsPushed) //possible change - pass in buttons on remote instead of boolean - have always running stop button
+        {
+            JoystickControlsBase controls = ArcadeDriveJoystick.getInstance();
+            if (btnIsPushed == true) 
             {
-               // JoystickControlsBase controls = ArcadeDriveJoystick.getInstance();
-                if (btnIsPushed == true) 
-                {
-                    hopperMotor.set(hopperSpeed);
-                }
-                else
-                {
-                    hopperMotor.set(hopperStop);
-                }
-                    
+                hopperMotor.set(hopperSpeed);
             }
+            else if (controls.getButton(Constants.kXboxButtonX));
+            {
+                hopperMotor.set(hopperStop);
+            }
+                
+        }
 }

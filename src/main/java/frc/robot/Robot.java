@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.lib.joystick.*;
+import frc.robot.loops.*;
+import frc.robot.subsystems.Drive;
+import frc.robot.command_status.*;
 import frc.robot.Constants;
 
 /**
@@ -33,6 +36,9 @@ public class Robot extends IterativeRobot {
   Intake intake; 
   Outtake goodOuttake;
   Outtake badOuttake;
+  Hopper hopper;
+  Drive drive = Drive.getInstance();
+	LoopController loopController;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -46,6 +52,10 @@ public class Robot extends IterativeRobot {
     intake = Intake.getInstance();
     goodOuttake = new Outtake(goodOuttakePort);
     badOuttake = new Outtake(badOuttakePort);
+    hopper = Hopper.getInstance();
+    loopController = new LoopController();
+    loopController.register(drive.getVelocityPIDLoop());
+    loopController.register(DriveLoop.getInstance());
   }
 
   /**
@@ -104,9 +114,14 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     colorSorter.run();
     intake.run();
+    loopController.start();
     JoystickControlsBase controls = ArcadeDriveJoystick.getInstance();
+    hopper.run(controls.getButton(Constants.kXboxButtonX));
     goodOuttake.run(controls.getButton(Constants.kXboxButtonA));
     badOuttake.run(controls.getButton(Constants.kXboxButtonB));
+    System.out.printf("BtnA: %b, BtnB: %b\n", controls.getButton(Constants.kXboxButtonA), controls.getButton(Constants.kXboxButtonB));
+    DriveCommand driveCmd = controls.getDriveCommand();
+    drive.setOpenLoop(driveCmd);
   } 
 
 

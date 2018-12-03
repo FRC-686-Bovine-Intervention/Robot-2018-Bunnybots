@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.networktables.*;
 
-
+//use solenoids to program phnematics on valve
 public class ColorSorter
 {
     public static ColorSorter mInstance = new ColorSorter();

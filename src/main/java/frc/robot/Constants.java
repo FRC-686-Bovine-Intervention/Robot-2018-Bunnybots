@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.lib.util.ConstantsBase;
+import edu.wpi.first.wpilibj.Solenoid.*;
 
 
 /**
@@ -94,7 +95,10 @@ public class Constants extends ConstantsBase
     // Gyro
     public enum GyroSelectionEnum { BNO055, NAVX; }
     public static GyroSelectionEnum GyroSelection = GyroSelectionEnum.NAVX;
-
+    
+    public static int kColorSolenoidForwardChannel = 1;
+    public static int kColorSolenoidReverseChannel = 2; 
+    //public static int kBunnyShooterSolenoidOnChannel = 3; 
     
  };
    

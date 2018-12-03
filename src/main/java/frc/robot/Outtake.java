@@ -15,7 +15,7 @@ public class Outtake
       outtakeMotor = new Talon(port);
     }
 
-    public void run (boolean btnIsPushed) //possible change - pass in buttons on remote instead of boolean
+    public void run (boolean btnIsPushed) //possible change - pass in buttons on remote instead of boolean poss. BTN LB god & LB+ btn for bad
     {
         if (btnIsPushed == true) {
             outtakeMotor.set(outtakeSpeed);
