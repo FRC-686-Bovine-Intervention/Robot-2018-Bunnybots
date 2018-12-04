@@ -18,7 +18,7 @@ import frc.robot.subsystems.Drive;
 import frc.robot.command_status.*;
 import frc.robot.Constants;
 
-/**
+/*
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
