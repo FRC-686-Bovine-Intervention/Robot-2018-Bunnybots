@@ -26,8 +26,6 @@ import frc.robot.Constants;
  * project.
  */
 public class Robot extends IterativeRobot {
-  public final int goodOuttakePort = 5;
-  public final int badOuttakePort = 6;
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -50,8 +48,8 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     colorSorter = ColorSorter.getInstance();
     intake = Intake.getInstance();
-    goodOuttake = new Outtake(goodOuttakePort);
-    badOuttake = new Outtake(badOuttakePort);
+    goodOuttake = Outtake.getGoodInstance();
+    badOuttake = Outtake.getBadInstance();
     hopper = Hopper.getInstance();
     loopController = new LoopController();
     loopController.register(drive.getVelocityPIDLoop());

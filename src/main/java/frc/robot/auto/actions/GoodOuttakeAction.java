@@ -19,10 +19,14 @@ import frc.robot.Robot;
  */
 public class GoodOuttakeAction implements Action {
 
-	private boolean finished;
+    Outtake outtake = Outtake.getGoodInstance();
+
+    private boolean finished;
+  
 
     public GoodOuttakeAction() {
         finished = false;
+
     }
 
     @Override
@@ -30,8 +34,9 @@ public class GoodOuttakeAction implements Action {
 	{
 System.out.println("Starting GoodOuttakeAction");		
 		boolean extended = true;
-		//outtake(); 
-		finished = true;
+		outtake.start(); 
+        finished = true;
+        outtake.done();
 	}
 
 	@Override

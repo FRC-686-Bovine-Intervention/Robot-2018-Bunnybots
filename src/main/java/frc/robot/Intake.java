@@ -31,4 +31,13 @@ public class Intake
         intakeMotor.set(intakeStop);
       }
     }
+
+    public void start()
+    {
+      intakeMotor.set(intakeSpeed);
+    }
+    public void done()
+    {
+      intakeMotor.set(intakeStop);
+    }
 }
