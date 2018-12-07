@@ -66,7 +66,10 @@ public class SmartDashboardInteractions
     
     enum AutoModeOption
     {
-        STAND_STILL("Stand Still");
+        STAND_STILL("Stand Still"),
+        CENTER_START_MODE("Center Start"),
+        DRIVE_STRAIGHT_MODE("Drive Straight"),
+        DRIVE_STRAIGHT_INTAKE_MODE("Drive and Intake");
     	
         public final String name;
 
@@ -113,6 +116,9 @@ public class SmartDashboardInteractions
        
         autoModeChooser = new SendableChooser<AutoModeOption>();
         autoModeChooser.addObject(AutoModeOption.STAND_STILL.name, AutoModeOption.STAND_STILL);
+        autoModeChooser.addObject(AutoModeOption.CENTER_START_MODE.name, AutoModeOption.CENTER_START_MODE);
+        autoModeChooser.addObject(AutoModeOption.DRIVE_STRAIGHT_MODE.name, AutoModeOption.DRIVE_STRAIGHT_MODE);
+        autoModeChooser.addObject(AutoModeOption.DRIVE_STRAIGHT_INTAKE_MODE.name, AutoModeOption.DRIVE_STRAIGHT_INTAKE_MODE);
         SmartDashboard.putData("Auto Mode", autoModeChooser);
     	
     	joystickModeChooser = new SendableChooser<JoystickOption>();
