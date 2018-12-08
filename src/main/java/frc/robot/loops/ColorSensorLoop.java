@@ -1,9 +1,9 @@
 package frc.robot.loops;
 
 import frc.robot.lib.sensors.TCS34725ColorSensor;
-import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.lib.sensors.TCS34725ColorSensor.TCSColor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Periodically estimates the state of the robot using the robot's distance
@@ -16,20 +16,15 @@ public class ColorSensorLoop implements Loop
     public static ColorSensorLoop getInstance() { return instance; }
 
     TCS34725ColorSensor colorSensor;
-    int redVal;
-    int grnVal;
-    int bluVal;
-    int clrVal;
-    public DoubleSolenoid colorSolenoid; 
-   // public final int port = 4;
-   // public static boolean goodDirection = Solenoid.Value.kForward;
-    //public static boolean badDirection = Solenoid.Value.kReverse;
+    TCSColor color;
+    boolean foundRed = false;
+    public DoubleSolenoid colorSolenoid;
+
 
     ColorSensorLoop() 
     {
-        colorSolenoid = new DoubleSolenoid(Constants.kColorSolenoidForwardChannel, Constants.kColorSolenoidReverseChannel);
         colorSensor = new TCS34725ColorSensor();
-        int ret_val = colorSensor.init();;
+        int ret_val = colorSensor.init();
         if (ret_val != 0)
         {
             System.out.println("ColorSensor failed to init");
@@ -45,35 +40,35 @@ public class ColorSensorLoop implements Loop
     	// no-op
     }
 
+    int loopCnt = 0;
+
     @Override
     public void onLoop() 
     {
-        // // read values from sensors
-         int ret_val = colorSensor.readColors();
-
-         if (ret_val != 0)
-         {
-            System.out.printf("Failed to read from ColorSensor: error code %d", ret_val);
-            return;
-         }
-
-        // after a successful read, you can query the individual colors
-        // clrVal =  colorSensor.getClearVal();
-        // grnVal =  colorSensor.getGreenVal();
-         redVal =  colorSensor.getRedVal();
-         bluVal =  colorSensor.getBlueVal();
-        if (redVal == 2)
+        // read values from sensors
+        color = colorSensor.readColors();
+        foundRed = true;
+        if ((color.getH() >= 42) && (color.getH() <= 205))
         {
-            colorSolenoid.set(DoubleSolenoid.Value.kForward);
-        }
-        else if (bluVal == 1)
+            // color is in the blue & green regions
+            foundRed = false;
+        }   
+
+        // counter to write to screen about 5 times/second
+        loopCnt++;
+        if (loopCnt >= 10)
         {
-            colorSolenoid.set(DoubleSolenoid.Value.kReverse);
+            if (foundRed)
+            {
+                colorSolenoid.set(DoubleSolenoid.Value.kForward);
+            }
+            else
+            {
+                colorSolenoid.set(DoubleSolenoid.Value.kReverse);
+            }
+
+            loopCnt = 0;
         }
-
-
-        // // for now, just print out the colors
-        // System.out.println(toString());
     }
 
     @Override
@@ -82,11 +77,8 @@ public class ColorSensorLoop implements Loop
         // no-op
     }
 
-
-	public String toString() 
-    {
-		return String.format("ColorSensor R: %3d, G: %d, B: %d, C: %d\n", 
-				redVal, grnVal, bluVal, clrVal);
+    public String toString() {
+        return "ColorSensor: " + color.toString();
     }
 
 }

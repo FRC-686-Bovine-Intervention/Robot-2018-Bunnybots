@@ -117,7 +117,7 @@ public class Robot extends IterativeRobot {
     hopper.run(controls.getButton(Constants.kXboxButtonX));
     goodOuttake.run(controls.getButton(Constants.kXboxButtonA));
     badOuttake.run(controls.getButton(Constants.kXboxButtonB));
-    System.out.printf("BtnA: %b, BtnB: %b\n", controls.getButton(Constants.kXboxButtonA), controls.getButton(Constants.kXboxButtonB));
+    // System.out.printf("BtnA: %b, BtnB: %b\n", controls.getButton(Constants.kXboxButtonA), controls.getButton(Constants.kXboxButtonB));
     DriveCommand driveCmd = controls.getDriveCommand();
     drive.setOpenLoop(driveCmd);
   } 

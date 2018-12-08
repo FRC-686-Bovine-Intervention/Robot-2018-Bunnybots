@@ -68,7 +68,6 @@ public class SmartDashboardInteractions
     {
         STAND_STILL("Stand Still"),
         CENTER_START_MODE("Center Start"),
-        DRIVE_STRAIGHT_MODE("Drive Straight"),
         DRIVE_STRAIGHT_INTAKE_MODE("Drive and Intake");
     	
         public final String name;
@@ -117,7 +116,6 @@ public class SmartDashboardInteractions
         autoModeChooser = new SendableChooser<AutoModeOption>();
         autoModeChooser.addObject(AutoModeOption.STAND_STILL.name, AutoModeOption.STAND_STILL);
         autoModeChooser.addObject(AutoModeOption.CENTER_START_MODE.name, AutoModeOption.CENTER_START_MODE);
-        autoModeChooser.addObject(AutoModeOption.DRIVE_STRAIGHT_MODE.name, AutoModeOption.DRIVE_STRAIGHT_MODE);
         autoModeChooser.addObject(AutoModeOption.DRIVE_STRAIGHT_INTAKE_MODE.name, AutoModeOption.DRIVE_STRAIGHT_INTAKE_MODE);
         SmartDashboard.putData("Auto Mode", autoModeChooser);
     	
@@ -146,7 +144,11 @@ public class SmartDashboardInteractions
     	switch(autoMode)
     	{
     	case STAND_STILL:
-			return new StandStillMode();
+            return new StandStillMode();
+        case CENTER_START_MODE:
+            return new CenterStartMode();
+        case DRIVE_STRAIGHT_INTAKE_MODE:
+            return new DriveStraightIntakeMode();
 			
     	default:
             System.out.println("ERROR: unexpected auto mode: " + autoMode);

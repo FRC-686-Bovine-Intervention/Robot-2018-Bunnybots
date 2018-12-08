@@ -94,7 +94,7 @@ public class Constants extends ConstantsBase
 	
     // Gyro
     public enum GyroSelectionEnum { BNO055, NAVX; }
-    public static GyroSelectionEnum GyroSelection = GyroSelectionEnum.NAVX;
+    public static GyroSelectionEnum GyroSelection = GyroSelectionEnum.BNO055;
     
     public static int kColorSolenoidForwardChannel = 1;
     public static int kColorSolenoidReverseChannel = 2; 

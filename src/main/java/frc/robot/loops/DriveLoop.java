@@ -111,7 +111,7 @@ public class DriveLoop implements Loop
 	private DriveLoop() 
 	{
 		drive = Drive.getInstance();
-
+System.out.println("driveLoop(): " + drive.toString());
 		driveState = DriveState.getInstance();
 		
 		/*****************************************************************
@@ -303,7 +303,7 @@ public class DriveLoop implements Loop
 	private void sendCommands()
 	{
 		DriveCommand newCmd = drive.getCommand();
-		
+	System.out.println(newCmd.toString());	
 		// Watchdog timer  
 		double currentTime = Timer.getFPGATimestamp();
 		if (currentTime - newCmd.getCommandTime() > Constants.kDriveWatchdogTimerThreshold)
