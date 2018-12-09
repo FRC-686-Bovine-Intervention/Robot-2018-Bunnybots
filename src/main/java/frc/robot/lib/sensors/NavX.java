@@ -2,13 +2,20 @@ package frc.robot.lib.sensors;
 
 import frc.robot.Constants;
 import com.kauailabs.navx.frc.AHRS;
+//import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.SPI;
 
 public class NavX extends GyroBase
 {
-	private static NavX instance = new NavX();
-	public static NavX getInstance() { return instance; }
+ 	// singleton class
+	private static NavX instance = null;
+	public static NavX getInstance() 
+	{ 
+		if (instance == null) {
+			instance = new NavX();
+		}
+		return instance;
+	}
 	
 	 AHRS ahrs;
 	

@@ -1,13 +1,10 @@
 package  frc.robot;
 
-import frc.robot.lib.joystick.*;
-import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.lib.joystick.ArcadeDriveJoystick;
+import frc.robot.lib.joystick.JoystickControlsBase;
 
-public class Intake
-{
+public class Intake {
     public static Intake mInstance = new Intake();
     public static Intake getInstance() { return mInstance; }
     public Talon intakeMotor; 

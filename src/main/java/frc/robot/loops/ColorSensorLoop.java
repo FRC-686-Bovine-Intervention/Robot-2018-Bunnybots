@@ -1,9 +1,8 @@
 package frc.robot.loops;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.robot.lib.sensors.TCS34725ColorSensor;
 import frc.robot.lib.sensors.TCS34725ColorSensor.TCSColor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 
 /**
  * Periodically estimates the state of the robot using the robot's distance

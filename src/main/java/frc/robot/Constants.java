@@ -1,7 +1,6 @@
 package frc.robot;
 
 import frc.robot.lib.util.ConstantsBase;
-import edu.wpi.first.wpilibj.Solenoid.*;
 
 
 /**
@@ -15,9 +14,16 @@ import edu.wpi.first.wpilibj.Solenoid.*;
  */
 public class Constants extends ConstantsBase
 {
-    private static ConstantsBase mInstance = new Constants();	// make sure we call constructor to set all robot-specific constants
-    public static ConstantsBase getInstance() { return mInstance; }
-	
+ 	// singleton class
+     private static Constants instance = null;
+     public static Constants getInstance() 
+     { 
+         if (instance == null) {
+             instance = new Constants();
+         }
+         return instance;
+     }
+     
     public static double kLoopDt = 0.01;
     public static double kDriveWatchdogTimerThreshold = 0.500;    
     public static int kTalonTimeoutMs = 5;	// ms

@@ -1,14 +1,10 @@
 package  frc.robot;
 
-import frc.robot.lib.joystick.*;
-import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.GenericHID;
-//Intake - 1 Hopper - 2 Color Sorter - 3 Valve - 4 Bouttake - 5 Gouttake - 6
+import frc.robot.lib.joystick.ArcadeDriveJoystick;
+import frc.robot.lib.joystick.JoystickControlsBase;
 
-public class Hopper
-{
+public class Hopper {
         public static Hopper mInstance = new Hopper();
         public static Hopper getInstance() { return mInstance; }
         public Talon hopperMotor;

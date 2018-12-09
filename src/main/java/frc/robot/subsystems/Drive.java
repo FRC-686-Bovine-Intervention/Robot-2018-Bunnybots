@@ -19,8 +19,15 @@ import frc.robot.loops.Loop;
 
 public class Drive extends Subsystem 
 {
-	private static Drive instance = new Drive();
-	public static Drive getInstance() { return instance; }
+	// singleton class
+	private static Drive instance = null;
+	public static Drive getInstance() 
+	{ 
+		if (instance == null) {
+			instance = new Drive();
+		}
+		return instance;
+	}
 
 	// drive commands
 	private DriveCommand driveCmd;
@@ -101,8 +108,6 @@ public class Drive extends Subsystem
 	{
 		driveCmd.setDriveMode(DriveControlMode.OPEN_LOOP);
 		driveCmd.setMotors(cmd.getLeftMotor(), cmd.getRightMotor());
-
-System.out.println("setOpenLoop: " + driveCmd.toString());
 	}
 
 	public void setBaseLockOn() 
