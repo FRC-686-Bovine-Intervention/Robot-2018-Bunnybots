@@ -1,6 +1,7 @@
 package frc.robot.loops;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Servo;
 import frc.robot.lib.sensors.TCS34725ColorSensor;
 import frc.robot.lib.sensors.TCS34725ColorSensor.TCSColor;
 
@@ -17,11 +18,14 @@ public class ColorSensorLoop implements Loop
     TCS34725ColorSensor colorSensor;
     TCSColor color;
     boolean foundRed = false;
-    public DoubleSolenoid colorSolenoid;
+    public Servo colorServo;
+   // public DoubleSolenoid colorSolenoid;
+    
 
 
     ColorSensorLoop() 
     {
+        Servo colorServo = new Servo(3);
         colorSensor = new TCS34725ColorSensor();
         int ret_val = colorSensor.init();
         if (ret_val != 0)
@@ -59,11 +63,13 @@ public class ColorSensorLoop implements Loop
         {
             if (foundRed)
             {
-                colorSolenoid.set(DoubleSolenoid.Value.kForward);
+             colorServo.setAngle(75);  
+               // colorSolenoid.set(DoubleSolenoid.Value.kForward);
             }
             else
             {
-                colorSolenoid.set(DoubleSolenoid.Value.kReverse);
+               colorServo.setAngle(75);
+               // colorSolenoid.set(DoubleSolenoid.Value.kReverse);
             }
 
             loopCnt = 0;
