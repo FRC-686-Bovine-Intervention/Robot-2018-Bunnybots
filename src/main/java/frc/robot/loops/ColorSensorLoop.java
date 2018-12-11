@@ -19,13 +19,14 @@ public class ColorSensorLoop implements Loop
     TCSColor color;
     boolean foundRed = false;
     public Servo colorServo;
+    public final int colorServoPort = 3;
    // public DoubleSolenoid colorSolenoid;
     
 
 
     ColorSensorLoop() 
     {
-        Servo colorServo = new Servo(3);
+        Servo colorServo = new Servo(colorServoPort);
         colorSensor = new TCS34725ColorSensor();
         int ret_val = colorSensor.init();
         if (ret_val != 0)

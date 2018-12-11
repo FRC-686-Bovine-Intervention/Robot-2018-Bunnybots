@@ -16,8 +16,8 @@ public class BunnyShooter {
 
     public BunnyShooter()
     {
-     bunnySolenoid = new DoubleSolenoid(5,6);
-     gateSolenoid = new DoubleSolenoid(1,2);
+     bunnySolenoid = new DoubleSolenoid(bFwdPort, bRvsPort);
+     gateSolenoid = new DoubleSolenoid(gFwdPort, gRvsPort);
     }
 
 
@@ -26,7 +26,7 @@ public class BunnyShooter {
         JoystickControlsBase controls = ArcadeDriveJoystick.getInstance();
         if (controls.getButton(Constants.kXboxButtonY)) {
             gateSolenoid.set(DoubleSolenoid.Value.kForward);
-          bunnySolenoid.set(DoubleSolenoid.Value.kForward);
+            bunnySolenoid.set(DoubleSolenoid.Value.kForward);
         } else {
           bunnySolenoid.set(DoubleSolenoid.Value.kReverse);
           gateSolenoid.set(DoubleSolenoid.Value.kReverse);
