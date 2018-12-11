@@ -14,7 +14,7 @@ public class Outtake
 
     public Talon outtakeMotor; 
     public int port; 
-    public static double outtakeSpeed = 1;
+    public static double outtakeSpeed = -1;
     public static double outtakeStop = 0; 
 
 
