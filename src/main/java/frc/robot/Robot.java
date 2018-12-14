@@ -7,17 +7,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import frc.robot.lib.joystick.*;
-import frc.robot.loops.*;
+import frc.robot.command_status.DriveCommand;
+import frc.robot.lib.joystick.ArcadeDriveJoystick;
+import frc.robot.lib.joystick.JoystickControlsBase;
+import frc.robot.loops.ColorSensorLoop;
+import frc.robot.loops.DriveLoop;
+import frc.robot.loops.LoopController;
 import frc.robot.subsystems.Drive;
-import frc.robot.command_status.*;
-import frc.robot.Constants;
-import edu.wpi.first.networktables.*;
+import frc.robot.lib.sensors.Limelight;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -38,7 +40,9 @@ public class Robot extends IterativeRobot {
   Hopper hopper;
   BunnyShooter bunnyShooter;
   Drive drive = Drive.getInstance();
-	LoopController loopController;
+  LoopController loopController;
+  Limelight limelight;
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -103,8 +107,31 @@ public class Robot extends IterativeRobot {
     System.out.println("Auto selected: " + m_autoSelected);
     // start ball sorter
     //start intake action
+		limelight.setPipeline(0);
+		limelight.setLEDMode(Limelight.LedMode.kOn);
+		limelight.setCamMode(Limelight.CamMode.kVision);
+		limelight.setSnapshot(Limelight.Snapshot.kOff);
+		limelight.setStream(Limelight.StreamType.kPiPMain);
+
   }
 
+
+ 	/****************************************************************
+	 * TELEOP MODE
+	 ****************************************************************/
+
+	@Override
+	public void teleopInit()
+	{
+		limelight.setPipeline(0);
+		limelight.setLEDMode(Limelight.LedMode.kOff);
+		limelight.setCamMode(Limelight.CamMode.kDriver);
+		limelight.setSnapshot(Limelight.Snapshot.kOff);
+		limelight.setStream(Limelight.StreamType.kPiPMain);
+	}
+
+
+  
   /**
    * This function is called periodically during autonomous.
    */
