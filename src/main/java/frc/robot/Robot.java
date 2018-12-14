@@ -74,7 +74,9 @@ public class Robot extends IterativeRobot {
     table.getEntry("ledMode").setNumber(0); //turning the LED off
     table.getEntry("camMode").setNumber(1); //turning on camera
 //    table.getEntry("stream").setNumber(1); //turn on stream to PiP Main
-  }
+  
+    limelight = new Limelight();
+}
 
   /**
    * This function is called every robot packet, no matter the mode. Use
