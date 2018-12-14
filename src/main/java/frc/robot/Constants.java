@@ -1,7 +1,7 @@
 package frc.robot;
 
 import frc.robot.lib.util.ConstantsBase;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 /**
  * Attribution: adapted from FRC Team 254
@@ -102,9 +102,9 @@ public class Constants extends ConstantsBase
     public enum GyroSelectionEnum { BNO055, NAVX; }
     public static GyroSelectionEnum GyroSelection = GyroSelectionEnum.BNO055;
     
-    public static int kColorSolenoidForwardChannel = 1;
-    public static int kColorSolenoidReverseChannel = 2; 
-    //public static int kBunnyShooterSolenoidOnChannel = 3; 
-    
+   // public static int kBunnyShooterForward;
+   // public static int kBunnyShooterReverse; 
+   // kBunnyShooterForward = 1;
+   // kBunnyShooterReverse = 2;
  };
    

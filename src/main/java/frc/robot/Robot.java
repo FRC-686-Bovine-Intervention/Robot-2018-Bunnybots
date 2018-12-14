@@ -17,6 +17,7 @@ import frc.robot.loops.*;
 import frc.robot.subsystems.Drive;
 import frc.robot.command_status.*;
 import frc.robot.Constants;
+import edu.wpi.first.networktables.*;
 
 /*
  * The VM is configured to automatically run this class, and to call the
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
   Outtake goodOuttake;
   Outtake badOuttake;
   Hopper hopper;
+  BunnyShooter bunnyShooter;
   Drive drive = Drive.getInstance();
 	LoopController loopController;
   /**
@@ -43,17 +45,31 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void robotInit() {
+    //setting up smartdashboard
     m_chooser.addDefault("Default Auto", kDefaultAuto);
     m_chooser.addObject("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    //setting up colorSorter, intake, outtakes and hopper
     colorSorter = ColorSorter.getInstance();
     intake = Intake.getInstance();
     goodOuttake = Outtake.getGoodInstance();
     badOuttake = Outtake.getBadInstance();
     hopper = Hopper.getInstance();
+    bunnyShooter = BunnyShooter.getInstance();    
+    //setting up loops and loop controllers
     loopController = new LoopController();
     loopController.register(drive.getVelocityPIDLoop());
     loopController.register(DriveLoop.getInstance());
+    loopController.register(ColorSensorLoop.getInstance());
+    //setting camera
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    table.getEntry("ledMode").setNumber(1); //turning the LED off
+    table.getEntry("camMode").setNumber(1); //turning on camera
+  //  table.getEntry("stream").setNumber(1); //turn on stream to PiP Main
+
+    table.getEntry("ledMode").setNumber(0); //turning the LED off
+    table.getEntry("camMode").setNumber(1); //turning on camera
+//    table.getEntry("stream").setNumber(1); //turn on stream to PiP Main
   }
 
   /**
@@ -113,7 +129,9 @@ public class Robot extends IterativeRobot {
     colorSorter.run();
     intake.run();
     loopController.start();
+    bunnyShooter.run();
     JoystickControlsBase controls = ArcadeDriveJoystick.getInstance();
+   // bunnyShooter.run(controls.getButton(Constants.kXboxButtonY));
     hopper.run(controls.getButton(Constants.kXboxButtonX));
     goodOuttake.run(controls.getButton(Constants.kXboxButtonA));
     badOuttake.run(controls.getButton(Constants.kXboxButtonB));

@@ -9,7 +9,7 @@ public class Hopper {
         public static Hopper getInstance() { return mInstance; }
         public Talon hopperMotor;
         public final int port = 2; 
-        public static double hopperSpeed = 1;
+        public static double hopperSpeed = 0.50;
         public static double hopperStop = 0;
 
         public Hopper ()

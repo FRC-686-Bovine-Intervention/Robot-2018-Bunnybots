@@ -18,15 +18,17 @@ public class ColorSensorLoop implements Loop
     TCS34725ColorSensor colorSensor;
     TCSColor color;
     boolean foundRed = false;
+    boolean foundBlue = false;
     public Servo colorServo;
     public final int colorServoPort = 3;
+    public int redCntr = 0;
    // public DoubleSolenoid colorSolenoid;
     
 
 
     ColorSensorLoop() 
     {
-        Servo colorServo = new Servo(colorServoPort);
+        colorServo = new Servo(colorServoPort);
         colorSensor = new TCS34725ColorSensor();
         int ret_val = colorSensor.init();
         if (ret_val != 0)
@@ -52,29 +54,35 @@ public class ColorSensorLoop implements Loop
         // read values from sensors
         color = colorSensor.readColors();
         foundRed = true;
+        //foundBlue = true;
         if ((color.getH() >= 42) && (color.getH() <= 205))
         {
             // color is in the blue & green regions
             foundRed = false;
-        }   
-
-        // counter to write to screen about 5 times/second
-        loopCnt++;
-        if (loopCnt >= 10)
+        } 
+        /*  
+        if ((color.getH() >= 42) && (color.getH() <= 205))
         {
+            // color is in the blue & green regions
+            foundBlue = false;
+        }   
+*/
+        // counter to write to screen about 5 times/second
+           // colorServo.setAngle(50);
             if (foundRed)
             {
-             colorServo.setAngle(75);  
-               // colorSolenoid.set(DoubleSolenoid.Value.kForward);
+                redCntr = 25;
+            }
+            if(redCntr > 0)
+            {
+                redCntr--;
+                colorServo.setAngle(120);
             }
             else
             {
-               colorServo.setAngle(75);
-               // colorSolenoid.set(DoubleSolenoid.Value.kReverse);
+                colorServo.setAngle(63); 
             }
 
-            loopCnt = 0;
-        }
     }
 
     @Override
