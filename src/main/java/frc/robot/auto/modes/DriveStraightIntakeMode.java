@@ -37,7 +37,7 @@ public class DriveStraightIntakeMode extends AutoModeBase {
         Vector2d intakeBallsPosition = new Vector2d(0,0);
         Vector2d driveToCratePosition = new Vector2d(0,0);
         Vector2d cratePosition = new Vector2d(0,0);
-        Vector2d startPosition = new Vector2d(0,0);
+       // Vector2d startPosition = new Vector2d(0,0);
 
         /*
         Path TurnPath = new Path();
@@ -60,9 +60,9 @@ public class DriveStraightIntakeMode extends AutoModeBase {
 		ballIntakePath.add(new Waypoint(intakeBallsPosition, pathOptions));	
         ballIntakePath.add(new Waypoint(driveToCratePosition, pathOptions));
 
-        Path backupToStartPath = new Path();
-		backupToStartPath.add(new Waypoint(driveToCratePosition, pathOptions));	
-        backupToStartPath.add(new Waypoint(startPosition, pathOptions));
+        //Path backupToStartPath = new Path();
+		//backupToStartPath.add(new Waypoint(driveToCratePosition, pathOptions));	
+        //backupToStartPath.add(new Waypoint(startPosition, pathOptions));
         /*
         Path turnToCratePath = new Path();
 		turnToCratePath.add(new Waypoint(turnToCratePosition, pathOptions));	
@@ -85,6 +85,6 @@ public class DriveStraightIntakeMode extends AutoModeBase {
             (new PathFollowerAction(ballIntakePath)),
             (new IntakeAction())})));    
         
-        runAction(new PathFollowerAction(backupToStartPath));
+       // runAction(new PathFollowerAction(backupToStartPath));
         }
     }

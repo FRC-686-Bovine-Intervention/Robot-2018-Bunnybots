@@ -76,11 +76,11 @@ public class ColorSensorLoop implements Loop
             if(redCntr > 0)
             {
                 redCntr--;
-                colorServo.setAngle(120);
+                colorServo.setAngle(120); //120
             }
             else
             {
-                colorServo.setAngle(63); 
+                colorServo.setAngle(63); //63
             }
 
     }

@@ -162,8 +162,8 @@ public class Robot extends IterativeRobot {
     JoystickControlsBase controls = ArcadeDriveJoystick.getInstance();
    // bunnyShooter.run(controls.getButton(Constants.kXboxButtonY));
     hopper.run(controls.getButton(Constants.kXboxButtonX));
-    goodOuttake.run(controls.getButton(Constants.kXboxButtonA));
-    badOuttake.run(controls.getButton(Constants.kXboxButtonB));
+    goodOuttake.run(controls.getButton(Constants.kXboxButtonB));
+    badOuttake.run(controls.getButton(Constants.kXboxButtonX));
     // System.out.printf("BtnA: %b, BtnB: %b\n", controls.getButton(Constants.kXboxButtonA), controls.getButton(Constants.kXboxButtonB));
     DriveCommand driveCmd = controls.getDriveCommand();
     drive.setOpenLoop(driveCmd);
