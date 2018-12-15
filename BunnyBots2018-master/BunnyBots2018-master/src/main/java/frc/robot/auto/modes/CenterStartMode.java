@@ -1,0 +1,92 @@
+package frc.robot.auto.modes;
+
+import java.util.Arrays;
+
+import frc.robot.auto.AutoModeBase;
+import frc.robot.auto.AutoModeEndedException;
+import frc.robot.auto.actions.Action;
+import frc.robot.auto.actions.GoodOuttakeAction;
+import frc.robot.auto.actions.GoodOuttakeStopAction;
+import frc.robot.auto.actions.IntakeAction;
+import frc.robot.auto.actions.ParallelAction;
+import frc.robot.auto.actions.PathFollowerAction;
+import frc.robot.auto.actions.WaitAction;
+import frc.robot.lib.util.Path;
+import frc.robot.lib.util.Path.Waypoint;
+import frc.robot.lib.util.PathSegment;
+import frc.robot.lib.util.Vector2d;
+import frc.robot.loops.DriveLoop;
+
+/**
+ * Just drive in a straight line, using VelocityHeading mode
+ */
+public class CenterStartMode extends AutoModeBase {
+
+    public CenterStartMode() 
+    { 
+    }
+
+    @Override
+    protected void routine() throws AutoModeEndedException 
+    {
+    	System.out.println("Starting Auto Mode: Center Start Mode");
+        PathSegment.Options pathOptions	= new PathSegment.Options(DriveLoop.kPathFollowingMaxVel, DriveLoop.kPathFollowingMaxAccel, 48, false);
+        PathSegment.Options tightTurnOptions	= new PathSegment.Options(DriveLoop.kPathFollowingMaxVel, DriveLoop.kPathFollowingMaxAccel, 48, false);
+        //Vector2d backupPosition = 		new Vector2d(24, 0);
+		//Vector2d cubePickupPosition = 	new Vector2d(152 - 3*13 - Constants.kCenterToExtendedIntake +  0, 0);	
+        Vector2d startPosition = new Vector2d(0,0);;
+        Vector2d driveToBallsPosition = new Vector2d(0,0);
+        Vector2d intakeBallsPosition = new Vector2d(0,0);
+        Vector2d driveToCratePosition = new Vector2d(0,0);
+        Vector2d cratePosition = new Vector2d(0,0);
+        Vector2d outtakeStartPosition = new Vector2d(0,0);
+        /*
+        Path TurnPath = new Path();
+		TurnPath.add(new Waypoint(startPosition, tightTurnOptions));	
+        TurnPath.add(new Waypoint(driveToBallsPosition, tightTurnOptions));
+        TurnPath.setReverseDirection();
+        */
+        /*
+        Path sharpTurnPath = new Path();	
+        sharpTurnPath.add(new Waypoint(turnPosition, pathOptions));
+        sharpTurnPath.add(new Waypoint(driveToBallsStartPosition, pathOptions));
+        sharpTurnPath.setReverseDirection();
+        */
+
+        Path driveToBallsPath = new Path();
+		driveToBallsPath.add(new Waypoint(driveToBallsPosition, pathOptions));	
+        driveToBallsPath.add(new Waypoint(intakeBallsPosition, pathOptions));
+
+        Path ballIntakePath = new Path();
+		ballIntakePath.add(new Waypoint(intakeBallsPosition, pathOptions));	
+        ballIntakePath.add(new Waypoint(driveToCratePosition, pathOptions));
+
+        /*
+        Path turnToCratePath = new Path();
+		turnToCratePath.add(new Waypoint(turnToCratePosition, pathOptions));	
+        turnToCratePath.add(new Waypoint(driveToCratePosition, pathOptions));
+        */
+
+        Path driveToCratePath = new Path();
+		driveToCratePath.add(new Waypoint(driveToCratePosition, tightTurnOptions));	
+        driveToCratePath.add(new Waypoint(cratePosition, pathOptions));
+
+        Path turnOuttakePath = new Path();
+		turnOuttakePath.add(new Waypoint(cratePosition, tightTurnOptions));	
+        turnOuttakePath.add(new Waypoint(outtakeStartPosition, tightTurnOptions));
+        
+        runAction(new GoodOuttakeAction()); 
+        runAction(new WaitAction(1.0));
+        //runAction(new PathFollowerAction(TurnPath));  
+        //runAction(new PathFollowerAction(sharpTurnPath));
+        runAction(new PathFollowerAction(driveToBallsPath));
+        runAction(new ParallelAction (Arrays.asList(new Action[] {
+            (new PathFollowerAction(ballIntakePath)),
+             (new IntakeAction())})));
+        //runAction(new PathFollowerAction(turnToCratePath));
+        runAction(new PathFollowerAction(driveToCratePath)); // don't cross middle line
+        runAction(new GoodOuttakeStopAction()); 
+        runAction(new PathFollowerAction(turnOuttakePath));
+        runAction(new GoodOuttakeAction());      
+    }
+}
